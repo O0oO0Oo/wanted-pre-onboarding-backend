@@ -2,8 +2,10 @@ package com.recruitment.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -12,6 +14,8 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id")
     private Long id;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobPosting> jobPostings;
     @Column(nullable = false)
     private String companyName;
     @Column(nullable = false)
@@ -20,8 +24,6 @@ public class Company {
     private String city;
     @Column(nullable = false)
     private String description;
-    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP ")
+    @UpdateTimestamp
     private ZonedDateTime lastUpdate;
-
 }
-

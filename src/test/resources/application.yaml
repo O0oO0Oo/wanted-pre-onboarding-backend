@@ -1,16 +1,16 @@
 
 spring:
-# DataSource
+  # DataSource
   datasource:
-    url: jdbc:postgresql://192.168.35.247:5432/recruitment
+    url: jdbc:postgresql://192.168.35.247:5432/recruitment_test
     username: db
     password: postgres
 
-# JPA
+  # JPA
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: create # 도메인 모두 설계 후에는 update, false
+      show-sql: true
     properties:
       hibernate:
         format_sql: true

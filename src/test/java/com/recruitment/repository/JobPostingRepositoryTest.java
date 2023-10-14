@@ -3,6 +3,7 @@ package com.recruitment.repository;
 import com.recruitment.domain.Company;
 import com.recruitment.domain.JobPosting;
 import com.recruitment.domain.JobPostingDetails;
+import com.recruitment.dto.response.JobPostingResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
@@ -51,9 +53,9 @@ class JobPostingRepositoryTest {
         );
         jobPosting.setCompany(company);
         jobPosting.setCompensation(500000L);
-        jobPosting.setPosition("신입");
+        jobPosting.setJobPosition("신입");
         jobPosting.setTitle("신입 스프링 개발자 채용");
-        jobPosting.setSkill(Arrays.asList("java", "spring"));
+        jobPosting.setSkills(Arrays.asList("java", "spring"));
 
         // job posting 1
         JobPosting jobPosting1 = new JobPosting();
@@ -64,9 +66,9 @@ class JobPostingRepositoryTest {
         );
         jobPosting1.setCompany(company);
         jobPosting1.setCompensation(500000L);
-        jobPosting1.setPosition("신입1");
+        jobPosting1.setJobPosition("신입1");
         jobPosting1.setTitle("신입 스프링 개발자 채용");
-        jobPosting1.setSkill(Arrays.asList("java", "spring"));
+        jobPosting1.setSkills(Arrays.asList("java", "spring"));
 
         // job posting 2
         JobPosting jobPosting2 = new JobPosting();
@@ -77,9 +79,9 @@ class JobPostingRepositoryTest {
         );
         jobPosting2.setCompany(company);
         jobPosting2.setCompensation(500000L);
-        jobPosting2.setPosition("신입2");
+        jobPosting2.setJobPosition("신입2");
         jobPosting2.setTitle("신입 스프링 개발자 채용");
-        jobPosting2.setSkill(Arrays.asList("java", "spring"));
+        jobPosting2.setSkills(Arrays.asList("java", "spring"));
 
         List<JobPosting> jobPostingList = new ArrayList<>();
         jobPostingList.add(jobPosting);
@@ -103,8 +105,8 @@ class JobPostingRepositoryTest {
         Pageable pageable2 = PageRequest.of(1, 2);
 
         // When
-        Page<JobPosting> page1 = jobPostingRepository.findAllByOrderByLastUpdateDesc(pageable1);
-        Page<JobPosting> page2 = jobPostingRepository.findAllByOrderByLastUpdateDesc(pageable2);
+        Page<JobPostingResponse> page1 = jobPostingRepository.findAllByOrderByLastUpdateDesc(pageable1);
+        Page<JobPostingResponse> page2 = jobPostingRepository.findAllByOrderByLastUpdateDesc(pageable2);
 
         // Then 총 3개의 데이터, 2개씩 페이징 1페이지 2개, 2페이지 1개
         assertThat(page1.getContent()).isNotNull();
@@ -113,7 +115,7 @@ class JobPostingRepositoryTest {
         assertThat(page2.getContent().size()).isEqualTo(1);
 
         // Then 0번째 보다 1번째가 늦음
-        assertThat(page1.getContent().get(0).getLastUpdate()).isAfter(page1.getContent().get(1).getLastUpdate());  // because we ordered by lastUpdate descending
+        assertThat(page1.getContent().get(0).lastUpdate()).isAfter(page1.getContent().get(1).lastUpdate());  // because we ordered by lastUpdate descending
 
 //        System.out.println(page1.getContent().get(0).getLastUpdate());
 //        System.out.println(page1.getContent().get(1).getLastUpdate());
@@ -139,9 +141,9 @@ class JobPostingRepositoryTest {
         );
         jobPosting.setCompany(company);
         jobPosting.setCompensation(500000L);
-        jobPosting.setPosition("신입");
+        jobPosting.setJobPosition("신입");
         jobPosting.setTitle("신입 스프링 개발자 채용");
-        jobPosting.setSkill(Arrays.asList("java", "spring"));
+        jobPosting.setSkills(Arrays.asList("java", "spring"));
 
         List<JobPosting> jobPostingList = new ArrayList<>();
         jobPostingList.add(jobPosting);
@@ -208,9 +210,9 @@ class JobPostingRepositoryTest {
         );
         jobPosting1.setCompany(company1);
         jobPosting1.setCompensation(500000L);
-        jobPosting1.setPosition("신입");
+        jobPosting1.setJobPosition("신입");
         jobPosting1.setTitle("신입 스프링 개발자 채용");
-        jobPosting1.setSkill(Arrays.asList("java", "spring"));
+        jobPosting1.setSkills(Arrays.asList("java", "spring"));
 
         JobPosting jobPosting2 = new JobPosting();
         jobPosting2.setJobPostingDetails(
@@ -218,9 +220,9 @@ class JobPostingRepositoryTest {
         );
         jobPosting2.setCompany(company1);
         jobPosting2.setCompensation(500000L);
-        jobPosting2.setPosition("신입");
+        jobPosting2.setJobPosition("신입");
         jobPosting2.setTitle("신입 파이썬 개발자 채용");
-        jobPosting2.setSkill(Arrays.asList("python", "flask"));
+        jobPosting2.setSkills(Arrays.asList("python", "flask"));
 
         List<JobPosting> jobPostingList1 = new ArrayList<>();
         jobPostingList1.add(jobPosting1);
@@ -244,9 +246,9 @@ class JobPostingRepositoryTest {
         );
         jobPosting3.setCompany(company2);
         jobPosting3.setCompensation(500000L);
-        jobPosting3.setPosition("신입");
+        jobPosting3.setJobPosition("신입");
         jobPosting3.setTitle("신입 파이썬 개발자 채용");
-        jobPosting3.setSkill(Arrays.asList("python", "flask"));
+        jobPosting3.setSkills(Arrays.asList("python", "flask"));
 
         List<JobPosting> jobPostingList2 = new ArrayList<>();
         jobPostingList2.add(jobPosting3);

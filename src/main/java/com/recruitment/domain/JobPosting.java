@@ -24,7 +24,7 @@ public class JobPosting {
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    private String position;
+    private String jobPosition;
     @Column(nullable = false)
     private Long compensation;
 
@@ -32,7 +32,7 @@ public class JobPosting {
      * 구분자 '/' 를 사용해서 python/java 이런 방식으로 저장
      */
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String skill;
+    private String skills;
 
     /**
      * LIKE '%text%' 검색을 위한 열, trgm index 설정
@@ -46,11 +46,11 @@ public class JobPosting {
      * skill 을 위한 set, get 정의
      * delimiter = "/"
      */
-    public void setSkill(List<String> skillList) {
-        this.skill = String.join("/",skillList);
+    public void setSkills(List<String> skillList) {
+        this.skills = String.join("/",skillList);
     }
-    public List<String> getSkill() {
-        return Arrays.stream(this.skill.split("/")).toList();
+    public List<String> getSkills() {
+        return Arrays.stream(this.skills.split("/")).toList();
     }
 
     /**

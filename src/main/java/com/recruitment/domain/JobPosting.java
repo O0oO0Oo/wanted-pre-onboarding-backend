@@ -2,14 +2,12 @@ package com.recruitment.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- *
- */
 @Entity
 @Data
 public class JobPosting {
@@ -17,11 +15,11 @@ public class JobPosting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_posting_id")
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "company_id")
+    @ManyToOne
+    @JoinColumn(name = "company_id", nullable = false)
     private Company company;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "job_posting_details_id")
+    @JoinColumn(name = "job_posting_details_id", nullable = false)
     private JobPostingDetails jobPostingDetails;
     @Column(nullable = false)
     private String title;
@@ -40,8 +38,9 @@ public class JobPosting {
      * LIKE '%text%' 검색을 위한 열, trgm index 설정
      */
     private String searchTextTrgm;
-    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP ")
+    @UpdateTimestamp
     private ZonedDateTime lastUpdate;
+
 
     /**
      * skill 을 위한 set, get 정의

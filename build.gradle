@@ -28,6 +28,9 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+////	 Mockito.mock( record 타입 ) 틀 사용하기 위해 추가
+	testImplementation 'org.mockito:mockito-inline'
 }
 
 tasks.named('test') {

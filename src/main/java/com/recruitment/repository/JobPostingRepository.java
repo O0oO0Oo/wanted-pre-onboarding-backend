@@ -13,7 +13,7 @@ public interface JobPostingRepository extends JpaRepository<JobPosting, Long> {
     /**
      * Company 와 Join 후에 최신 업데이트 순서로 paging
      */
-    @Query("SELECT new com.recruitment.dto.response.JobPostingResponse(j.id, c.companyName, c.country, c.city, j.jobPosition, j.compensation, j.skills, j.lastUpdate) " +
+    @Query("SELECT new com.recruitment.dto.response.JobPostingResponse(j.id, c.companyName, c.id ,c.country, c.city, j.jobPosition, j.compensation, j.skills, j.lastUpdate) " +
             "FROM JobPosting j JOIN j.company c ORDER BY j.lastUpdate DESC")
     Page<JobPostingResponse> findAllByOrderByLastUpdateDesc(Pageable pageable);
 

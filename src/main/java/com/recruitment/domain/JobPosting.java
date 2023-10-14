@@ -43,17 +43,6 @@ public class JobPosting {
 
 
     /**
-     * skill 을 위한 set, get 정의
-     * delimiter = "/"
-     */
-    public void setSkills(List<String> skillList) {
-        this.skills = String.join("/",skillList);
-    }
-    public List<String> getSkills() {
-        return Arrays.stream(this.skills.split("/")).toList();
-    }
-
-    /**
      * TODO: 자연어 처리 라이브러리를 사용하여 저장
      */
     public void setSearchTextTrgm() {

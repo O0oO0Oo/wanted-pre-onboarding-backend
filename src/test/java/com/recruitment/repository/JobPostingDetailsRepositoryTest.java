@@ -53,7 +53,7 @@ class JobPostingDetailsRepositoryTest {
         jobPosting.setCompensation(500000L);
         jobPosting.setJobPosition("신입");
         jobPosting.setTitle("신입 스프링 개발자 채용");
-        jobPosting.setSkills(Arrays.asList("java", "spring"));
+        jobPosting.setSkills("java/spring");
 
         List<JobPosting> jobPostingList = new ArrayList<>();
         jobPostingList.add(jobPosting);

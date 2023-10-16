@@ -6,6 +6,7 @@ import com.recruitment.domain.JobPostingDetails;
 import com.recruitment.dto.request.JobPostingAddRequest;
 import com.recruitment.dto.request.JobPostingModifyRequest;
 import com.recruitment.dto.response.*;
+import com.recruitment.repository.CompanyRepository;
 import com.recruitment.repository.JobPostingDetailsRepository;
 import com.recruitment.repository.JobPostingRepository;
 import jakarta.persistence.EntityManager;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class JobPostingService {
     private final JobPostingRepository jobPostingRepository;
     private final JobPostingDetailsRepository jobPostingDetailsRepository;
+    private final CompanyRepository companyRepository;
     private final EntityManager entityManager;
 
     /**
@@ -55,16 +58,20 @@ public class JobPostingService {
         jobPostingDetails.setDescription(jobPostingAddRequest.jobPostingDetails());
         JobPostingDetails saveedJobPostingDetails = jobPostingDetailsRepository.save(jobPostingDetails);
 
-        // 회사 프록시
-        Company company = entityManager.getReference(Company.class, jobPostingAddRequest.companyId());
+        // 이전 코드의 프록시로 불러오면 안됨. 없는 회사의 ID 라면 에러 반환
+        Company company = companyRepository.findById(jobPostingAddRequest.companyId())
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Invalid companyId: " + jobPostingAddRequest.companyId())
+                );
 
         // 채용 공고 등록
         JobPosting jobPosting = new JobPosting();
-        jobPosting.setTitle(jobPosting.getTitle());
-        jobPosting.setJobPosition(jobPosting.getJobPosition());
-        jobPosting.setCompensation(jobPosting.getCompensation());
+        jobPosting.setTitle(jobPostingAddRequest.title());
+        jobPosting.setJobPosition(jobPostingAddRequest.jobPosition());
+        jobPosting.setCompensation(jobPostingAddRequest.compensation());
         jobPosting.setJobPostingDetails(saveedJobPostingDetails);
         jobPosting.setCompany(company);
+        jobPosting.setSkills(jobPostingAddRequest.skills());
 
         JobPosting savedJobPosting = jobPostingRepository.save(jobPosting);
 

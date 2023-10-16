@@ -9,6 +9,7 @@ import com.recruitment.dto.response.JobPostingDetailResponse;
 import com.recruitment.dto.response.JobPostingModifyResponse;
 import com.recruitment.dto.response.JobPostingResponse;
 import com.recruitment.dto.response.PagingResponse;
+import com.recruitment.repository.CompanyRepository;
 import com.recruitment.repository.JobPostingDetailsRepository;
 import com.recruitment.repository.JobPostingRepository;
 import jakarta.persistence.EntityManager;
@@ -43,7 +44,7 @@ class JobPostingServiceTest {
     @Mock
     private JobPostingDetailsRepository jobPostingDetailsRepository;
     @Mock
-    private EntityManager entityManager;
+    private CompanyRepository companyRepository;
     @InjectMocks
     private JobPostingService jobPostingService;
 
@@ -85,10 +86,10 @@ class JobPostingServiceTest {
 
         when(jobPostingDetailsRepository.save(Mockito.any(JobPostingDetails.class)))
                 .thenReturn(jobPostingDetails);
+        when(companyRepository.findById(jobPostingAddRequest.companyId()))
+                .thenReturn(Optional.of(company));
         when(jobPostingRepository.save(Mockito.any(JobPosting.class)))
                 .thenReturn(jobPosting);
-        when(entityManager.getReference(Mockito.eq(Company.class), Mockito.anyLong()))
-                .thenReturn(company);
 
         // When
         JobPostingResponse response = jobPostingService.addJobPosting(jobPostingAddRequest);
@@ -101,7 +102,6 @@ class JobPostingServiceTest {
         // Verify
         verify(jobPostingDetailsRepository).save(Mockito.any(JobPostingDetails.class));
         verify(jobPostingRepository).save(Mockito.any(JobPosting.class));
-        verify(entityManager).getReference(Mockito.eq(Company.class),Mockito.anyLong());
     }
 
     // 등록 실패
@@ -204,7 +204,7 @@ class JobPostingServiceTest {
         String message = jobPostingService.deleteJobPosting(jobPostingId);
         
         // Then
-        assertThat("삭제 되었습니다.").isEqualTo(message);
+        assertThat("삭제되었습니다.").isEqualTo(message);
 
         // Verify
         verify(jobPostingRepository).delete(jobPosting);

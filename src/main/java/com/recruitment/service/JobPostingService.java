@@ -103,7 +103,7 @@ public class JobPostingService {
 
         jobPostingRepository.delete(jobPosting);
 
-        return "삭제 되었습니다.";
+        return "삭제되었습니다.";
     }
 
     // 상세 페이지, 동일 회사 공고 id list

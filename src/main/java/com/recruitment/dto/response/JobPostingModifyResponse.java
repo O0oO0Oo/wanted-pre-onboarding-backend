@@ -4,7 +4,7 @@ import com.recruitment.domain.JobPosting;
 import com.recruitment.domain.JobPostingDetails;
 
 /**
- * 채용 공고 상세 내용 Dto
+ * 채용공고 수정 응답 Dto
  */
 public record JobPostingModifyResponse(
         Long jobPostingId,

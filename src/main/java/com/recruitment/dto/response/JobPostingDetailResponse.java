@@ -6,6 +6,9 @@ import com.recruitment.domain.JobPostingDetails;
 
 import java.util.List;
 
+/**
+ * 채용공고 상세 내용 응답 Dto
+ */
 public record JobPostingDetailResponse(
         Long jobPostingId,
         String companyName,

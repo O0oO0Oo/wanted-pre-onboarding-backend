@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Company {
     @Column(name = "company_id")
     private Long id;
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JobPosting> jobPostings;
+    private List<JobPosting> jobPostings = new ArrayList<>();
     @Column(nullable = false)
     private String companyName;
     @Column(nullable = false)

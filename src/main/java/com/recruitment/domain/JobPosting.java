@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class JobPosting {
      * 지원 이력, 공고가 삭제되면 지원이력도 삭제
      */
     @OneToMany(mappedBy = "jobPosting", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JobApplicationHistory> jobApplicationHistories;
+    private List<JobApplicationHistory> jobApplicationHistories = new ArrayList<>();
 
     /**
      * 구분자 '/' 를 사용해서 python/java 이런 방식으로 저장

@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class MemberResume {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
     @OneToMany(mappedBy = "memberResume", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JobApplicationHistory> jobApplicationHistory;
+    private List<JobApplicationHistory> jobApplicationHistory = new ArrayList<>();
     @UpdateTimestamp
     private ZonedDateTime lastUpdate;
 }

@@ -95,6 +95,7 @@ class MemberResumeRepositoryTest {
         jobApplicationHistory = new JobApplicationHistory();
         jobApplicationHistory.setMemberResume(memberResume1);
         jobApplicationHistory.setJobPosting(jobPosting);
+        jobApplicationHistory.setMember(member);
 
         memberResumeRepository.saveAll(memberResumeList);
         jobApplicationHistoryRepository.saveAndFlush(jobApplicationHistory);

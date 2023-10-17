@@ -19,6 +19,9 @@ public class JobApplicationHistory {
     @ManyToOne
     @JoinColumn(name = "job_posting_id", nullable = false)
     private JobPosting jobPosting;
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
     @UpdateTimestamp
     private ZonedDateTime lastUpdate;
 }

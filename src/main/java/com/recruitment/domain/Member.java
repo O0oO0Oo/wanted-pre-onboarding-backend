@@ -23,6 +23,8 @@ public class Member {
     private String phone;
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberResume> memberResumeList = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobApplicationHistory> jobApplicationHistories = new ArrayList<>();
     @UpdateTimestamp
     private ZonedDateTime lastUpdate;
 }

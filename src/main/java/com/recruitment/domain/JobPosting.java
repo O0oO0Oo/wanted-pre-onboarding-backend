@@ -29,6 +29,12 @@ public class JobPosting {
     private Long compensation;
 
     /**
+     * 지원 이력, 공고가 삭제되면 지원이력도 삭제
+     */
+    @OneToMany(mappedBy = "jobPosting", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JobApplicationHistory> jobApplicationHistories;
+
+    /**
      * 구분자 '/' 를 사용해서 python/java 이런 방식으로 저장
      */
     @Column(columnDefinition = "TEXT", nullable = false)

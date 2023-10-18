@@ -2,7 +2,7 @@
 spring:
   # DataSource
   datasource:
-    url: jdbc:postgresql://192.168.35.247:5432/recruitment_test
+    url: jdbc:postgresql://192.168.35.221:5432/recruitment_test
     username: db
     password: postgres
 

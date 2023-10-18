@@ -23,14 +23,14 @@ public class JobPostingController {
     // 목록 조회
     @GetMapping
     public ResponseEntity<PagingResponse<JobPostingResponse>> listJobPostings(@RequestParam(name = "page")
-                                                                                  int pageNumber) {
+                                                                              int pageNumber) {
         return ResponseEntity.ok(jobPostingService.findJobPosting(pageNumber));
     }
 
     // 채용 공고 등록
     @PostMapping
     public ResponseEntity<JobPostingResponse> addJobPosting(@RequestBody @Valid
-                                                                JobPostingAddRequest request) {
+                                                            JobPostingAddRequest request) {
         return new ResponseEntity<>(jobPostingService.addJobPosting(request), HttpStatus.CREATED);
     }
 
@@ -51,5 +51,14 @@ public class JobPostingController {
     @GetMapping("/details")
     public ResponseEntity<JobPostingDetailResponse> findJobPostingDetails(@RequestParam(name = "id") Long id) {
         return ResponseEntity.ok(jobPostingService.findJobPostingDetails(id));
+    }
+
+    // 채용 공고 키워드 검색
+    @GetMapping("/search")
+    public ResponseEntity<PagingResponse<JobPostingResponse>> searchListJobPostings(
+            @RequestParam("keyword") String keyword,
+            @RequestParam("page") int pageNumber
+    ) {
+        return ResponseEntity.ok(jobPostingService.findSearchText(keyword, pageNumber));
     }
 }

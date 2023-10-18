@@ -14,7 +14,7 @@ public record JobPostingModifyResponse(
         Long compensation,
         String skills
 ) {
-    public static JobPostingModifyResponse fromEntity(JobPosting jobPosting, JobPostingDetails jobPostingDetails1) {
+    public static JobPostingModifyResponse fromEntities(JobPosting jobPosting, JobPostingDetails jobPostingDetails1) {
         return new JobPostingModifyResponse(
                 jobPosting.getId(),
                 jobPostingDetails1.getDescription(),

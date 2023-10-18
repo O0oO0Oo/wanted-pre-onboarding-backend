@@ -42,17 +42,30 @@ public class JobPosting {
     private String skills;
 
     /**
-     * LIKE '%text%' 검색을 위한 열, trgm index 설정
+     * LIKE '%text%' 검색을 위한 열, trgm index 설정 X
+     * trgm -> to_tsvector 변경
+     * tsvector 타입으로 생성
+     * search_text_tsvector tsvector
+     * 인덱스 생성
+     * CREATE INDEX idx_search_text_tsvector ON job_posting USING gin(search_text_tsvector);
+     * 걷색
+     * select * from job_posting where search_text_tsvector @@ to_tsquery('경험자 &백엔드 & spring&msa')
+     *
+     * TODO : DB에는 TSVECTOR 타입이고 Domain 에서는 String 타입이라 계속 에러가 발생 - 수정
+     * - JPQL 로 넣을시 다음과 같은 에러
+     * SQL Error: 0, SQLState: 42804
+     * ERROR: column "search_text_tsvector" is of type tsvector but expression is of type character varying
+     *   Hint: You will need to rewrite or cast the expression.
+     *
+     * - nativeQuery = True 로 한다음 to_tsvector() 변환 후 입력시에는 다음과 같은 에러
+     * SQL Error: 0, SQLState: 02000
+     * No results were returned by
+     *
+     * @Modify 사용 드디어 해결
      */
-    private String searchTextTrgm;
+    @Column(columnDefinition = "TSVECTOR")
+    private String searchTextTsvector;
+
     @UpdateTimestamp
     private ZonedDateTime lastUpdate;
-
-
-    /**
-     * TODO: 자연어 처리 라이브러리를 사용하여 저장
-     */
-    public void setSearchTextTrgm() {
-        this.searchTextTrgm = "";
-    }
 }

@@ -251,15 +251,100 @@
 ---
 ## 3. 기능 구현
 ### 키워드 검색
-- 간단한 파이썬 서버
-
----
-## 4. NLP 서버 구현
-- Konlpy - Okt(Open Korean Text) 사용
-
-### TTBF 측정
-- Socket : Spring <-> Python 0.072s ~
-- http : Spring <-> Flask 0.0108s ~
-- grpc
-
-### 5. 
+- 간단한 파이썬 서버, TTBF 측정
+https://sungwon9.notion.site/Python-26c73d52f5f94bba861a549362eb04a4?pvs=4
+- 현재
+- 요청 1 "flask" 단어 검색 Get : http://localhost:8080/jobposting/search?keyword=flask&page=0
+```json
+{
+    "data": [
+        {
+            "jobPostingId": 6,
+            "companyName": "Skyba",
+            "companyId": 4,
+            "country": "Myanmar",
+            "city": "Mandalay",
+            "jobPosition": "백엔드 파이썬 채용",
+            "compensation": 100,
+            "skills": "스킬1/flask/스킬4/스킬5",
+            "lastUpdate": null
+        },
+        {
+            "jobPostingId": 5,
+            "companyName": "Skyba",
+            "companyId": 4,
+            "country": "Myanmar",
+            "city": "Mandalay",
+            "jobPosition": "백엔드 django 채용",
+            "compensation": 100,
+            "skills": "스킬1/flask/스킬4/스킬5",
+            "lastUpdate": null
+        }
+    ],
+    "metaData": {
+        "currentPage": 0,
+        "totalPages": 1,
+        "totalItems": 2,
+        "itemsPerPage": 20
+    }
+}
+```
+- 요청 2 "백엔드개발자채용" : http://localhost:8080/jobposting/search?keyword=백엔드개발자채용&page=0
+```json
+{
+    "data": [
+        {
+            "jobPostingId": 3,
+            "companyName": "Skyba",
+            "companyId": 4,
+            "country": "Myanmar",
+            "city": "Mandalay",
+            "jobPosition": "백엔드 스프링 개발자 채용",
+            "compensation": 100,
+            "skills": "스킬1/스킬2/스킬4/스킬5",
+            "lastUpdate": null
+        },
+        {
+            "jobPostingId": 1,
+            "companyName": "Devcast",
+            "companyId": 2,
+            "country": "Indonesia",
+            "city": "Nularan",
+            "jobPosition": "백엔드 개발자 파이썬 스프링 도커 경험 우대",
+            "compensation": 100,
+            "skills": "스킬1/스킬2/스킬4/스킬5",
+            "lastUpdate": null
+        }
+    ],
+    "metaData": {
+        "currentPage": 0,
+        "totalPages": 1,
+        "totalItems": 2,
+        "itemsPerPage": 20
+    }
+}
+```
+- 요청 3 "채용MSA" : http://localhost:8080/jobposting/search?keyword=채용MSA&page=0
+```json
+{
+    "data": [
+        {
+            "jobPostingId": 2,
+            "companyName": "Dynava",
+            "companyId": 3,
+            "country": "Indonesia",
+            "city": "Sindangsari",
+            "jobPosition": "백엔드 스프링 MSA 우대",
+            "compensation": 100,
+            "skills": "스킬1/스킬2/스킬4/스킬5",
+            "lastUpdate": null
+        }
+    ],
+    "metaData": {
+        "currentPage": 0,
+        "totalPages": 1,
+        "totalItems": 1,
+        "itemsPerPage": 20
+    }
+}
+```

@@ -253,6 +253,33 @@
 ### 키워드 검색
 - 간단한 파이썬 서버, TTBF 측정
 https://sungwon9.notion.site/Python-26c73d52f5f94bba861a549362eb04a4?pvs=4
+```java
+/**
+ * tsvector 타입의 serach_text_tsvector 은 삽입, 수정 시 갱신이 된다.
+ * 인덱스 생성
+ * CREATE INDEX idx_search_text_tsvector ON job_posting USING gin(search_text_tsvector);
+ * 아래 JobPostingRepository 인터페이스의 네이티브 쿼리
+ * j.search_text_tsvector @@ to_tsquery(:keyword)
+ * NLPServer 를 거쳐 "채용MSA" -> "채용&MSA" 로 쿼리에 들어간다.
+*/ 
+@Query(value =
+    "SELECT " +
+	    "  j.job_posting_id as jobPostingId, " +
+	    "  c.company_name as companyName, " +
+	    "  c.company_id as companyId, " +
+	    "  c.country as country, " +
+	    "  c.city as city, " +
+	    "  j.job_position as jobPosition, " +
+	    "  j.compensation as compensation, " +
+	    "  j.skills as skills, " +
+	    "  j.last_update as lastUdate " +
+	    "FROM job_posting j " +
+	    "JOIN company c ON j.company_id = c.company_id " + 
+	    "WHERE j.search_text_tsvector @@ to_tsquery(:keyword) " + // se
+	    "ORDER BY j.last_update DESC",
+    nativeQuery = true)
+Page<MappingJobPostingResponse> searchText(Pageable pageable, @Param("keyword") String keyword);
+```
 - 현재
 - 요청 1 "flask" 단어 검색 Get : http://localhost:8080/jobposting/search?keyword=flask&page=0
 ```json

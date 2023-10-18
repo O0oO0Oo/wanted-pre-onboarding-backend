@@ -295,7 +295,7 @@ select * from recruitment_test where search_text_trgm @@ to_tsquery('경험자 &
 ---
 ## 3. 기능 구현
 ### 키워드 검색
-- 간단한 파이썬 서버, TTBF 측정
+- 간단한 파이썬 서버, TTFB 측정
 https://sungwon9.notion.site/Python-26c73d52f5f94bba861a549362eb04a4?pvs=4
 - 키워드 검색 기준 : 회사의 이름, 국가, 도시 / 공고의 포지션, 스킬, 공고의 상세내용
 ```java
@@ -320,7 +320,7 @@ https://sungwon9.notion.site/Python-26c73d52f5f94bba861a549362eb04a4?pvs=4
 	    "  j.last_update as lastUdate " +
 	    "FROM job_posting j " +
 	    "JOIN company c ON j.company_id = c.company_id " + 
-	    "WHERE j.search_text_tsvector @@ to_tsquery(:keyword) " + // se
+	    "WHERE j.search_text_tsvector @@ to_tsquery(:keyword) " +
 	    "ORDER BY j.last_update DESC",
     nativeQuery = true)
 Page<MappingJobPostingResponse> searchText(Pageable pageable, @Param("keyword") String keyword);

@@ -9,7 +9,7 @@
 ### Company : 회사 도메인
 ### JobPostingDetails : 공고 상세내용 도메인
 ### JobPosting : 공고 도메인
-- 공고 목록 요청 Get : http://localhost:8080/jobposting?page=0
+- 공고 목록 요청 Get : http://localhost:8080/jobposting?page=0 / RequestParameter : paga
 - 공고 목록 응답 :
 ```json 
 {
@@ -34,7 +34,7 @@
     }
 }
 ```
-- 공고 등록 요청 Post : http://localhost:8080/jobposting
+- 공고 등록 요청 Post : http://localhost:8080/jobposting / json
 ```json
 {
     "companyId":1,
@@ -59,7 +59,7 @@
     "lastUpdate": "2023-10-18T22:52:06.352976+09:00"
 }
 ```
-- 공고 수정 요청 Put : http://localhost:8080/jobposting
+- 공고 수정 요청 Put : http://localhost:8080/jobposting / json
 ```json
 {
 		"jobPostingId":1,
@@ -81,9 +81,9 @@
     "skills": "스킬10/스킬1"
 }
 ```
-- 공고 삭제 요청 Delete : http://localhost:8080/jobposting?id=2
+- 공고 삭제 요청 Delete : http://localhost:8080/jobposting?id=2 / RequestParameter : id
 - 공고 삭제 응답 : "삭제되었습니다."
-- 공고 상세 조회 요청 Get : http://localhost:8080/jobposting/details?id=3
+- 공고 상세 조회 요청 Get : http://localhost:8080/jobposting/details?id=3 / RequestParameter : id
 - 공고 상세 조회 응답 :
 ```json
 {
@@ -111,7 +111,7 @@
 ## 2.2 사용자 이력서 지원 관련 도메인
 ### Member : 사용자 도메인
 ### MemberResume : 사용자 이력서 도메인
-- 사용자 이력서 등록 요청 Post : http://localhost:8080/resume
+- 사용자 이력서 등록 요청 Post : http://localhost:8080/resume / json
 ```json
 {
 		"memberId":2,
@@ -127,7 +127,7 @@
     "description": "저는 00을 잘하고 스킬은 A, B, C 가 있습니다.. "
 }
 ```
-- 사용자 이력서 목록 조회 요청 Get : http://localhost:8080/resume?memberId=2&page=0
+- 사용자 이력서 목록 조회 요청 Get : http://localhost:8080/resume?memberId=2&page=0 / RequestParameter : memberId, page
 - 사용자 이력서 목록 조회 응답 :
 ```json
 {
@@ -151,7 +151,7 @@
     }
 }
 ```
-- 사용자 이력서 수정 요청 Put : http://localhost:8080/resume
+- 사용자 이력서 수정 요청 Put : http://localhost:8080/resume / json
 ```json
 {
 		"memberResumeId":1,
@@ -168,9 +168,9 @@
     "description": "저는 00을 잘하고 스킬은 00이 있어요. 열심히 하겠습니다."
 }
 ```
-- 사용자 이력서 삭제 요청 Delete : http://localhost:8080/resume?memberResumeId=1
+- 사용자 이력서 삭제 요청 Delete : http://localhost:8080/resume?memberResumeId=1 / RequestParameter : memberResumeId
 - 사용자 이력서 삭제 응답 : "삭제되었습니다."
-- 사용자 이력서 상세 조회 요청 Get : http://localhost:8080/resume/details?memberResumeId=3
+- 사용자 이력서 상세 조회 요청 Get : http://localhost:8080/resume/details?memberResumeId=3 / RequestParameter : memberResumeId
 - 사용자 이력서 상세 조회 응답 :
 ```json
 {
@@ -181,6 +181,7 @@
 ```
 ### JobApplicationHistory
 - 사용자의 이력서 지원 요청 Post : http://localhost:8080/applications?memberId=2&memberResumeId=3&jobPostingId=1
+- / RequestParameter : id, memberResumeId, jobPostingId
 - 사용자의 이력서 지원 응답 :
 ```json
 {
@@ -194,6 +195,7 @@
 }
 ```
 - 사용자 입장의 사용자가 지원했던 기록 조회 요청 Get : http://localhost:8080/applications/member?memberId=2&page=0
+- / RequestParameter : memberId, page
 - 사용자 입장의 사용자가 지원했던 기록 조회 응답 :  
 ```json
 {
@@ -226,6 +228,7 @@
 }
 ```
 - 회사 입장의 특정 공고에 지원한 이력서들 조회 요청 Get : http://localhost:8080/applications/company?jobPostingId=3&page=0
+- / RequestParameter jobPostingId, page
 - 회사 입장의 특정 공고에 지원한 이력서들 조회 응답 :
 ```json
 {

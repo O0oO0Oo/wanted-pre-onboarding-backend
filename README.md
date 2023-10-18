@@ -1,7 +1,48 @@
 # wanted-pre-onboarding-backend
 
-### 1. 사전 과제 DB 테스트 (프로젝트를 진행하면서 약간의 변경이 있음)
+## 1. 사전 과제 DB 인덱스 테스트 (프로젝트를 진행하면서 약간의 변경이 있음)
 - https://sungwon9.notion.site/DB-e46e5aa7314545429be76014071658be?pvs=4
+```SQL
+create table recruitment_test(
+	recruitment_id bigint generated always as identity,
+	company_name varchar(50) not null,
+	country varchar(50) not null,
+	city varchar(50) not null,
+	recruitment_position_skill jsonb not null,
+	recruitment_compensation integer not null,
+	search_text_trgm tsvector, -- tsvector
+-- 	search_text_trgm text, -- trgm
+	constraint recuitment_key primary key(recruitment_id),
+	constraint company_name_unique UNIQUE (company_name)
+);
+
+-- 파이썬으로 5만건의 데이터 추가
+-- 인덱스 설정 x - Sequence 스캔
+explain analyze 
+select * from recruitment_test where search_text_trgm @@ to_tsquery('경험자 &백엔드 & spring&msa')
+"Gather  (cost=1000.00..10760.95 rows=8302 width=519) (actual time=1.653..164.489 rows=15287 loops=1)"
+"  Workers Planned: 2"
+"  Workers Launched: 2"
+"  ->  Parallel Seq Scan on recruitment_test  (cost=0.00..8930.75 rows=3459 width=519) (actual time=0.472..151.208 rows=5096 loops=3)"
+"        Filter: (search_text_trgm @@ to_tsquery('경험자 &백엔드 & spring&msa'::text))"
+"        Rows Removed by Filter: 11571"
+"Planning Time: 3.210 ms"
+"Execution Time: 165.555 ms"
+
+-- 인덱스 설정 - Bitmap 스캔 10배 가량 빨라짐
+CREATE INDEX idx_search_text_trgm ON recruitment_test USING gin(search_text_trgm);
+explain analyze
+select * from recruitment_test where search_text_trgm @@ to_tsquery('경험자 &백엔드 & spring&msa')
+"Bitmap Heap Scan on recruitment_test  (cost=112.17..5753.44 rows=8302 width=519) (actual time=10.234..14.591 rows=15287 loops=1)"
+"  Recheck Cond: (search_text_trgm @@ to_tsquery('경험자 &백엔드 & spring&msa'::text))"
+"  Heap Blocks: exact=3448"
+"  ->  Bitmap Index Scan on idx_search_text_trgm  (cost=0.00..110.09 rows=8302 width=0) (actual time=9.722..9.722 rows=15287 loops=1)"
+"        Index Cond: (search_text_trgm @@ to_tsquery('경험자 &백엔드 & spring&msa'::text))"
+"Planning Time: 0.613 ms"
+"Execution Time: 15.148 ms"
+
+
+```
 ---
 ## 2. 도메인
 ![image](https://github.com/O0oO0Oo/wanted-pre-onboarding-backend/assets/110446760/5c131b2d-9998-462c-871d-94a35e151a50)
